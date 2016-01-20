@@ -186,8 +186,8 @@ IF(APPLE)
     # Trying to get CMake to generate an XCode IPhone project, current efforts are to get iphoneos sdk 3.1 working
     # Added option which needs manually setting to select the IPhone SDK for building. We can only have one of the below
     # set to true. Should realy have an OSG_BUILD_PLATFORM variable that we set to our desired platform
-    OPTION(OSG_BUILD_PLATFORM_IPHONE "Enable IPhoneSDK Device support" OFF)
-    OPTION(OSG_BUILD_PLATFORM_IPHONE_SIMULATOR "Enable IPhoneSDK Simulator support" OFF)
+    OPTION(OSG_BUILD_PLATFORM_IPHONE "Enable IPhoneSDK Device support" ON)
+    OPTION(OSG_BUILD_PLATFORM_IPHONE_SIMULATOR "Enable IPhoneSDK Simulator support" ON)
 
     IF(OSG_BUILD_PLATFORM_IPHONE OR OSG_BUILD_PLATFORM_IPHONE_SIMULATOR)
 
@@ -199,8 +199,8 @@ IF(APPLE)
         # Force gcc <= 4.2 on iPhone
         IF(IPHONE_VERSION_MIN LESS "6.0")
             include(CMakeForceCompiler)
-            CMAKE_FORCE_C_COMPILER(llvm-gcc-4.2 GNU)
-            CMAKE_FORCE_CXX_COMPILER(llvm-gcc-4.2 GNU)
+            CMAKE_FORCE_C_COMPILER(/usr/bin/clang GNU)
+            CMAKE_FORCE_CXX_COMPILER(/usr/bin/clang GNU)
             SET(GCC_THUMB_SUPPORT NO)
         ENDIF()
 
@@ -402,7 +402,7 @@ OPTION(OSG_USE_REF_PTR_IMPLICIT_OUTPUT_CONVERSION "Set to ON to use the ref_ptr<
 
 
 # Map the OPENGL_PROFILE to OSG_GL*_AVAILABLE settings
-SET(OPENGL_PROFILE "GL2" CACHE STRING "OpenGL Profile to use, choose from GL1, GL2, GL3, GLES1, GLES2, GLES3")
+SET(OPENGL_PROFILE "GLES2" CACHE STRING "OpenGL Profile to use, choose from GL1, GL2, GL3, GLES1, GLES2, GLES3")
 
 IF ((OPENGL_PROFILE STREQUAL "GL1") OR (OPENGL_PROFILE STREQUAL "GL2"))
     OPTION(OSG_GL1_AVAILABLE "Set to OFF to disable use of OpenGL 1.x functions library." ON )
@@ -629,7 +629,7 @@ ENDIF()
 # Optional build components
 
 # OSG Applications
-OPTION(BUILD_OSG_APPLICATIONS "Enable to build OSG Applications (e.g. osgviewer)" ON)
+OPTION(BUILD_OSG_APPLICATIONS "Enable to build OSG Applications (e.g. osgviewer)" OFF)
 
 # OSG Examples
 OPTION(BUILD_OSG_EXAMPLES "Enable to build OSG Examples" OFF)
@@ -1037,7 +1037,7 @@ ENDIF()
 
 
 # Dynamic vs Static Linking
-OPTION(DYNAMIC_OPENSCENEGRAPH "Set to ON to build OpenSceneGraph for dynamic linking.  Use OFF for static." ON)
+OPTION(DYNAMIC_OPENSCENEGRAPH "Set to ON to build OpenSceneGraph for dynamic linking.  Use OFF for static." OFF)
 IF   (DYNAMIC_OPENSCENEGRAPH)
     SET(OPENSCENEGRAPH_USER_DEFINED_DYNAMIC_OR_STATIC "SHARED")
 ELSE ()
